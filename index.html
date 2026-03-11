@@ -455,7 +455,7 @@
 //  CONFIGURATION — PASTE YOUR API KEY HERE (OPTIONAL)
 //  You can also enter it in the banner above each session.
 // ============================================================
-const HARDCODED_API_KEY = ""; // e.g. "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"
+const HARDCODED_API_KEY = ""; // e.g. "sk-ant-api03-xxxx"
 
 // ============================================================
 //  LEAD DATA
@@ -667,7 +667,12 @@ Return ONLY a valid JSON array, no markdown, no backticks, no explanation:
   try {
     const res = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": apiKey,
+        "anthropic-version": "2023-06-01",
+        "anthropic-dangerous-direct-browser-access": "true"
+      },
       body: JSON.stringify({
         model: "claude-sonnet-4-20250514",
         max_tokens: 1000,
