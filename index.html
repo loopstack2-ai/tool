@@ -627,35 +627,39 @@ async function generateSequence() {
 
   const senderLine = senderRole ? `${senderName}, ${senderRole}` : senderName;
 
-  const prompt = `You are an expert B2B sales copywriter. Write a 5-touch cold outreach sequence selling TalentForge AI to a recruitment agency.
+  const prompt = `You are a top B2B sales copywriter known for writing cold emails that feel like they came from a real person, not a tool.
 
-PRODUCT: TalentForge AI — £19.95/month SaaS for independent UK recruitment agencies.
-Tools included: JD Writer, Batch CV Screener (ranks up to 5 CVs with fit scores + PROGRESS/DECLINE), Candidate Outreach Generator (personalised per LinkedIn/email/WhatsApp), Client Pitch Generator (reads live website URL), Interview Question Bank, SHL-style Psychometric Test Generator.
+Write a 5-touch outreach sequence from ${senderLine} to the ${selectedLead.contact} at ${selectedLead.name}.
+
+PRODUCT BEING SOLD: TalentForge AI — £19.95/month for independent UK recruitment agencies.
+What it does: JD Writer (drafts job descriptions in seconds), Batch CV Screener (ranks up to 5 CVs with fit scores and PROGRESS/DECLINE), Candidate Outreach Generator (personalised messages per LinkedIn/email/WhatsApp), Client Pitch Generator (reads the prospect's live website and writes a bespoke pitch), Interview Question Bank, Psychometric Test Generator.
 Free trial: 10 generations, no card needed.
 
-PROSPECT:
-Company: ${selectedLead.name}
-Size: ${selectedLead.size}
-Location: ${selectedLead.location}
-Sector: ${selectedLead.sector}
-Target contact role: ${selectedLead.contact}
-Website: ${selectedLead.website}
-Core pain point: ${selectedLead.painPoint}
-Key hook: ${selectedLead.hook}
-Suggested angle: "${selectedLead.angle}"
+PROSPECT DETAILS:
+- Company: ${selectedLead.name}
+- Size: ${selectedLead.size}
+- Location: ${selectedLead.location}
+- Sector: ${selectedLead.sector}
+- Contact role: ${selectedLead.contact}
+- Website: ${selectedLead.website}
+- Their specific pain: ${selectedLead.painPoint}
+- What makes them relevant: ${selectedLead.hook}
+- Best angle to use: "${selectedLead.angle}"
 
-SENDER: ${senderLine}
+STRICT WRITING RULES — violating any of these makes the output unusable:
+1. Never use "Hi there" — use "Hi [Job Title]" or the company name if no contact name is known
+2. Never fabricate statistics or case studies — only reference real product features
+3. Never use these phrases: "I hope this finds you well", "I wanted to reach out", "touching base", "circle back", "pain points", "game-changer", "revolutionary", "leverage", "synergy", "I came across your profile"
+4. Every email must be under 100 words — count carefully
+5. Touch 2 LinkedIn must be under 290 characters — count carefully
+6. Touch 4 LinkedIn must be under 200 characters — count carefully
+7. Touch 3 must use a completely different angle from Touch 1 — focus on a different TalentForge tool
+8. Touch 5 is the breakup email — make it warm, not passive aggressive
+9. Sound like a founder reaching out personally, not a sales rep running a cadence
+10. End every email with just the sender's first name — no sign-off like "Best" or "Kind regards"
+11. The CTA must be a simple question — never "Book a call" or "Click here"
 
-SEQUENCE RULES:
-- Touch 1: Cold email. Open with specific observation about their business. Under 100 words. Soft CTA (15-min call or reply).
-- Touch 2: LinkedIn connection request. Under 290 characters. Reference the email.
-- Touch 3: Follow-up email. DIFFERENT angle — use a mini case study or new pain point. Under 100 words.
-- Touch 4: LinkedIn message (after connecting). Short value-add, no hard sell. Under 200 characters.
-- Touch 5: Breakup email. Signals final follow-up. Removes pressure. Often gets replies. Under 80 words.
-
-STYLE: Human, specific, never corporate. No "I hope this finds you well". No buzzwords. Each message has ONE job and ONE CTA.
-
-Return ONLY a valid JSON array, no markdown, no backticks, no explanation:
+Return ONLY a valid JSON array, no markdown, no backticks, no preamble:
 [
   {"touch":1,"channel":"Email","subject":"...","body":"..."},
   {"touch":2,"channel":"LinkedIn","body":"..."},
